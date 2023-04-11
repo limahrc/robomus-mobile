@@ -1,22 +1,22 @@
 package com.nescom.robomus.domain
 
 import android.content.Context
-import android.media.midi.MidiDevice
 import android.media.midi.MidiDeviceInfo
 import android.media.midi.MidiManager
+import android.media.midi.MidiReceiver
+import android.media.midi.MidiSender
 import android.os.Build
-import android.text.TextUtils.isEmpty
 import android.util.Log
 
 class MidiController(
-    private val context: Context,
-    private val onMidiReceived: (ByteArray, Int, Int, Long) -> Unit
-) :
-    MidiManager.OnDeviceOpenedListener {
-
-    constructor(context: Context) : this(context, { _, _, _, _ -> })
+    private val context: Context
+) {
 
     private lateinit var midiManager: MidiManager
+
+    private val receiver = Synth()
+    private val sender = Sender()
+
     var deviceInfos: Array<MidiDeviceInfo>? = null
         private set
 
@@ -40,8 +40,15 @@ class MidiController(
         }
     }
 
-    override fun onDeviceOpened(p0: MidiDevice?) {
-        p0?.let {
+    fun connectToSender(deviceInfo: MidiDeviceInfo) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            try {
+                midiManager.openDevice(deviceInfo, { device ->
+                    device.openOutputPort(0)?.connect(receiver)
+                }, null)
+            } catch (e: Exception) {
+                Log.e("MIDI", "Error connecting to sender", e)
+            }
         }
     }
 }

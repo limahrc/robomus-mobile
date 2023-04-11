@@ -24,7 +24,7 @@ fun MainNavigator(
         }
         composable(Routes.MidiReceiver.route) {
             ReceiverScreen(
-                onSearchDevicesClicked = midiController::logDevices,
+                onConnectClicked = midiController::connectToSender,
                 devices = midiController.deviceInfos ?: emptyArray(),
                 onBackPressed = { navController.navigateUp() }
             )

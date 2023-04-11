@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<devices>
+    <device
+        name="NESCoM MidiSynthBasic"
+        manufacturer="NESCoM"
+        product="MidiSynthBasic">
+        <input-port name="input" />
+    </device>
+</devices>
