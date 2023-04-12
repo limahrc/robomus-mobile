@@ -93,7 +93,7 @@ fun DeviceList(
 
                 virtualDevices.forEach { device ->
                     DeviceListItem(
-                        painter = painterResource(id = R.drawable.ic_music),
+                        painter = painterResource(id = R.drawable.ic_mixer),
                         deviceName = device.properties.getString("name") ?: "Unknown",
                         manufacturer = device.properties.getString("manufacturer") ?: "Unknown",
                         isPrivate = device.isPrivate
@@ -118,7 +118,7 @@ fun DeviceList(
                 } else {
                     realDevices.forEach { device ->
                         DeviceListItem(
-                            painter = painterResource(id = R.drawable.ic_music),
+                            painter = painterResource(id = R.drawable.ic_usb),
                             deviceName = device.properties.getString("name") ?: "Unknown",
                             manufacturer = device.properties.getString("manufacturer") ?: "Unknown",
                             isPrivate = device.isPrivate
@@ -148,7 +148,12 @@ fun DeviceListItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Image(painter = painter, contentDescription = "Device icon")
+                Image(
+                    painter = painter,
+                    contentDescription = "Device icon",
+                    modifier = Modifier
+                        .size(18.dp)
+                )
                 Text(text = "Can connect?")
                 Box(modifier = Modifier.clip(RoundedCornerShape(4.dp))) {
                     if (isPrivate) {
@@ -187,7 +192,7 @@ fun DeviceListItem(
 fun PreviewDeviceCard() {
     DeviceListItem(
         deviceName = "Porta USB",
-        painter = painterResource(id = R.drawable.ic_login),
+        painter = painterResource(id = R.drawable.ic_usb),
         isPrivate = false,
         onConnectClicked = {}
     )
